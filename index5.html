@@ -1,6 +1,5 @@
 <!--    
-    #4.0 Props (15:24) 
-    :: 부모 컴포넌트로부터 자식 컴포넌트로 데이터를 보내는 예시 
+    #4.2 Prop Types 
 -->
 <!DOCTYPE html>
     <body>
@@ -8,26 +7,30 @@
     </body>
 
     <script src = "https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
-    <script src = "https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+    <script src = "https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+    <script src = "https://unpkg.com/prop-types@15.7.2/prop-types.js"></script>
     <script src = "https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script type = "text/babel">
       
-        function Btn({text, changeValue}){
+        function Btn({text, fontSize = 14}){
             console.log(text, "was rendered");
 
             return <button 
-                onClick = {changeValue}
                 style={{
                     backgroundColor: "tomato",
                     color:"white",
                     padding:"10px 20px",
                     border: 0,
                     borderRadius: 10,
-                    fontSize:16,
+                    fontSize,
                 }}>{text}</button>;
         }
 
-        const MemorizedBtn = React.memo(Btn);
+
+        Btn.propTypes = {
+            text: PropTypes.string.isRequired,
+            fontSize: PropTypes.number,
+        }
 
         function App(){
 
@@ -38,8 +41,8 @@
 
             return (
                 <div>
-                    <MemorizedBtn text={value} changeValue={changeValue}/>
-                    <MemorizedBtn text="Continue"/>
+                    <Btn text="Save Changes" fontSize={20} />
+                    <Btn text= "Continue" />
                 </div>
                 );
             };
